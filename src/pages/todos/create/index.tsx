@@ -8,7 +8,7 @@ import { db } from "@/lib/firebase";
 const Create = () => {
   const [todoTitle, setTodoTitle] = useState("");
   const [todoDetail, setTodoDetail] = useState("");
-  const [todoDeadlineAt, setTodoDeadlineAt] = useState("2023-03-01T00:00");
+  const [todoDeadlineAt, setTodoDeadlineAt] = useState("2023-03-01T00:00"); // 暫定的に設定（設定 or 未設定ができれば良いが…）
 
   // 一旦コメントアウトで保存しておく。
   // const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) =>

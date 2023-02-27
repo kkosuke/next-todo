@@ -36,3 +36,22 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+
+# メモ1
+Next.jsで「TODOリスト」を作成してください。
+・「簡易アプリ仕様設計-SampleTODOリスト」のようにページを分けて作ってみましょう。
+・一覧、詳細、作成、編集画面を分ける
+・FirebaseなどバックエンドをつかったCRUD機能
+
+余裕があれば
+・ChakraUIもしくはMaterialUI導入
+・ログイン、ログアウト、サインアップ
+・useContextもしくはRecoilを用いた状態管理
+・Typescriptを導入
+
+# メモ2
+- npx create-next-app .
+- npm install firebase
+- yarn add @emotion/react @mui/material @emotion/styled @mui/icons-material
+- tsconfig.json を更新

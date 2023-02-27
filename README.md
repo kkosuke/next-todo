@@ -55,3 +55,5 @@ Next.jsで「TODOリスト」を作成してください。
 - npm install firebase
 - yarn add @emotion/react @mui/material @emotion/styled @mui/icons-material
 - tsconfig.json を更新
+- yarn add sass
+- yarn add moment

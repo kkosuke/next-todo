@@ -1,9 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
+import { PrimaryLinkButton } from "@/components/atoms/button/PrimaryLinkButton";
+import { db } from "@/lib/firebase";
+import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
 
 const Todos = () => {
-  const [todos, setTodos] = useState([1, 2, 3, 4, 5]);
+  const [todos, setTodos] = useState<any>([]);
+  useEffect(() => {
+    const postData = collection(db, "todos");
+    const q = query(postData, orderBy("createdAt", "desc"));
+    // getDocs(q).then((snapshot)=>{
+    //   setPosts(snapshot.docs.map((doc)=>(doc.data())));
+    // });
+    onSnapshot(q, (snapshot) => {
+      setTodos(
+        snapshot.docs.map((doc) => {
+          return { ...doc.data(), id: doc.id };
+        })
+      );
+    });
+  }, []);
   return (
     <>
       <Head>
@@ -16,15 +33,15 @@ const Todos = () => {
       <h1>TODO一覧</h1>
       <main>
         <p>
-          <Link href="/todos/create">TODOを新規作成する</Link>
+          <PrimaryLinkButton href="/todos/create" text="TODOを新規作成する" />
         </p>
-        <div>
-          {todos.map((todo) => (
-            <div key={todo}>
-              <Link href={`/todos/${todo}`}>/todos/{todo}</Link>
-            </div>
+        <ul>
+          {todos.map((todo: any) => (
+            <li key={todo.id}>
+              <Link href={`/todos/${todo.id}`}>{todo.title}</Link>
+            </li>
           ))}
-        </div>
+        </ul>
       </main>
     </>
   );

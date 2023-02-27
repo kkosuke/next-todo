@@ -9,11 +9,11 @@ export default function Home() {
         <title>Create Next App</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
+
       <main className={styles.main}>
         <p>
           <Link href="/todos">TODOs</Link>
         </p>
-
         <p>
           <Link href="/signup">[WIP]サインアップ</Link>
         </p>

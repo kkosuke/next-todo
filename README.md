@@ -58,3 +58,4 @@ Next.jsで「TODOリスト」を作成してください。
 - yarn add sass
 - yarn add moment
 - https://mui.com/material-ui/react-dialog/
+- https://cloud.google.com/firestore/docs/manage-data/add-data?hl=ja#server_timestamp

@@ -2,7 +2,12 @@ import React, { useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { Button } from "@mui/material";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  serverTimestamp,
+  Timestamp,
+} from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
 const Create = () => {
@@ -25,7 +30,7 @@ const Create = () => {
       const docRef = await addDoc(collection(db, "todos"), {
         title: todoTitle,
         detail: todoDetail,
-        deadlineAt: todoDeadlineAt,
+        deadlineAt: Timestamp.fromDate(new Date(todoDeadlineAt)),
         createdAt: serverTimestamp(),
         editedAt: serverTimestamp(),
       });

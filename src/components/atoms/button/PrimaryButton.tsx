@@ -7,7 +7,7 @@ type Props = {
   text: string;
 };
 
-export const PrimaryLinkButton: FC<Props> = (props) => {
+export const PrimaryButton: FC<Props> = (props) => {
   const { href, text } = props;
   return (
     <Link

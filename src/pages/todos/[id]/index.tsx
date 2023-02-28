@@ -10,17 +10,19 @@ import { Button, DialogActions, DialogTitle } from "@mui/material";
 import { SimpleDialog } from "@/components/molecules/dialog/SimpleDialog";
 
 const TodoDetail = () => {
-  const [todo, setTodo] = useState<any>();
+  const [todo, setTodo] = useState<any>(null);
   const router = useRouter();
   const id = router.query.id;
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   useEffect(() => {
-    const userDocumentRef = doc(db, "todos", String(id));
-    getDoc(userDocumentRef).then((documentSnapshot) => {
-      if (id !== undefined && typeof id === "string") {
-        setTodo({ ...documentSnapshot.data(), id });
-      }
-    });
+    if (typeof id === "string") {
+      const userDocumentRef = doc(db, "todos", id);
+      getDoc(userDocumentRef).then((documentSnapshot) => {
+        if (documentSnapshot.data()) {
+          setTodo({ ...documentSnapshot.data(), id });
+        }
+      });
+    }
   }, [id]);
   const handleOpen = async () => {
     setOpenDeleteDialog(true);

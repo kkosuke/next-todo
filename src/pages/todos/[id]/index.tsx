@@ -19,6 +19,7 @@ const TodoDetail = () => {
       const userDocumentRef = doc(db, "todos", id);
       getDoc(userDocumentRef).then((documentSnapshot) => {
         if (documentSnapshot.data()) {
+          console.log({ ...documentSnapshot.data(), id });
           setTodo({ ...documentSnapshot.data(), id });
         }
       });

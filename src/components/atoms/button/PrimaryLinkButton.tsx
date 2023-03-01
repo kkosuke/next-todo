@@ -5,7 +5,7 @@ import React, { FC } from "react";
 type Props = {
   href: string;
   text: string;
-  variant?: string;
+  variant?: "contained" | "text" | "outlined";
 };
 
 export const PrimaryLinkButton: FC<Props> = (props) => {

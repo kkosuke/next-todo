@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
-import { PrimaryButton } from "@/components/atoms/button/PrimaryButton";
+import { PrimaryLinkButton } from "@/components/atoms/button/PrimaryLinkButton";
 import { db } from "@/lib/firebase";
 import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
 
@@ -33,7 +33,7 @@ const Todos = () => {
       <h1>TODO一覧</h1>
       <main>
         <p>
-          <PrimaryButton href="/todos/create" text="TODOを新規作成する" />
+          <PrimaryLinkButton href="/todos/create" text="TODOを新規作成する" />
         </p>
         <ul>
           {todos.map((todo: any) => (

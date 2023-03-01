@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { doc, getDoc, deleteDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import moment from "moment";
-import { PrimaryButton } from "@/components/atoms/button/PrimaryButton";
+import { PrimaryLinkButton } from "@/components/atoms/button/PrimaryLinkButton";
 import { Button, DialogActions, DialogTitle } from "@mui/material";
 import { SimpleDialog } from "@/components/molecules/dialog/SimpleDialog";
 
@@ -13,7 +13,7 @@ const TodoDetail = () => {
   const [todo, setTodo] = useState<any>(null);
   const router = useRouter();
   const id = router.query.id;
-  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
   useEffect(() => {
     if (typeof id === "string") {
       const userDocumentRef = doc(db, "todos", id);
@@ -26,10 +26,10 @@ const TodoDetail = () => {
     }
   }, [id]);
   const handleOpen = async () => {
-    setOpenDeleteDialog(true);
+    setOpenDialog(true);
   };
   const handleClose = () => {
-    setOpenDeleteDialog(false);
+    setOpenDialog(false);
   };
   const handleTodoDelete = async () => {
     await deleteDoc(doc(db, "todos", String(id))).then(() => {
@@ -39,7 +39,7 @@ const TodoDetail = () => {
   return (
     <>
       <Head>
-        <title>{id} | TODO詳細 | TODO</title>
+        <title>{id} | 詳細 | TODO</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <p>
@@ -47,7 +47,7 @@ const TodoDetail = () => {
       </p>
       {todo ? (
         <>
-          <SimpleDialog open={openDeleteDialog} onClose={handleClose}>
+          <SimpleDialog open={openDialog} onClose={handleClose}>
             <DialogTitle>本当にTODOを削除しますか？</DialogTitle>
             <DialogActions>
               <Button autoFocus onClick={handleClose}>
@@ -62,7 +62,7 @@ const TodoDetail = () => {
             <div>
               <h1>{todo.title}</h1>
               <p>
-                <PrimaryButton href={`/todos/${id}/edit`} text="編集する" />{" "}
+                <PrimaryLinkButton href={`/todos/${id}/edit`} text="編集する" />{" "}
                 <Button variant="outlined" onClick={handleOpen}>
                   削除する
                 </Button>

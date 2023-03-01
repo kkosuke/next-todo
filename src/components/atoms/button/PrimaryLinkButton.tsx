@@ -5,10 +5,11 @@ import React, { FC } from "react";
 type Props = {
   href: string;
   text: string;
+  variant?: string;
 };
 
-export const PrimaryButton: FC<Props> = (props) => {
-  const { href, text } = props;
+export const PrimaryLinkButton: FC<Props> = (props) => {
+  const { href, text, variant = "contained" } = props;
   return (
     <Link
       href={href}
@@ -16,7 +17,7 @@ export const PrimaryButton: FC<Props> = (props) => {
         textDecoration: "none",
       }}
     >
-      <Button variant="contained">{text}</Button>
+      <Button variant={variant}>{text}</Button>
     </Link>
   );
 };

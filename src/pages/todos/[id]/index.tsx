@@ -25,7 +25,7 @@ const TodoDetail = () => {
       });
     }
   }, [id]);
-  const handleOpen = async () => {
+  const handleOpen = () => {
     setOpenDialog(true);
   };
   const handleClose = () => {

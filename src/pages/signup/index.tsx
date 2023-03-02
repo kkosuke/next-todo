@@ -13,6 +13,7 @@ export default function SignUp() {
   const user = useUser();
   const auth = getAuth(app);
   const isLoggedIn = !!user;
+  const [isSignUpping, setIsSignUpping] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const handleClose = async () => {
@@ -20,15 +21,20 @@ export default function SignUp() {
   };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (password.length > 5) {
-      await createUserWithEmailAndPassword(auth, email, password);
-      router.push(
-        {
-          pathname: "/",
-          query: { from: "signup_success" },
-        },
-        "/"
-      );
+    setIsSignUpping(true);
+    try {
+      if (password.length > 5) {
+        await createUserWithEmailAndPassword(auth, email, password);
+        router.push(
+          {
+            pathname: "/",
+            query: { from: "signup_success" },
+          },
+          "/"
+        );
+      }
+    } finally {
+      setIsSignUpping(false);
     }
   };
   const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,7 +50,7 @@ export default function SignUp() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Snackbar
-        open={isLoggedIn}
+        open={isLoggedIn && !isSignUpping}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         autoHideDuration={3000}
         key={"top" + "center"}
@@ -113,7 +119,7 @@ export default function SignUp() {
               `}
             >
               <Button type="submit" variant="outlined">
-                登録
+                サインアップする
               </Button>
             </div>
             <div

@@ -151,7 +151,7 @@ export default function SignIn() {
                 margin-top: 24px;
               `}
             >
-              サインインは<Link href={"/signin"}>こちら</Link>から
+              サインアップは<Link href={"/signup"}>こちら</Link>から
             </div>
           </form>
         </div>

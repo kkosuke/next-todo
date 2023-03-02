@@ -16,35 +16,27 @@ import {
 import { SimpleDialog } from "@/components/molecules/dialog/SimpleDialog";
 
 const TodoDetail = () => {
-  const [todo, setTodo] = useState<any>(null);
   const router = useRouter();
   const id = router.query.id;
+
+  const [todo, setTodo] = useState<any>(null);
   const [openDialog, setOpenDialog] = useState(false);
   const [openSnackbarSuccess, setOpenSnackbarSuccess] = useState(false);
   const [openSnackbarError, setOpenSnackbarError] = useState(false);
-
-  // const [editTitle, setEditTitle] = useState("");
-  // const [editDetail, setEditDetail] = useState("");
-
-  useEffect(() => {
-    if (typeof id === "string") {
-      const userDocumentRef = doc(db, "todos", id);
-      getDoc(userDocumentRef).then((documentSnapshot) => {
-        if (documentSnapshot.data()) {
-          const _todo = { ...documentSnapshot.data(), id };
-          setTodo(_todo);
-        }
-      });
-    }
-  }, [id]);
-
-  const handleOpen = async () => {
-    setOpenDialog(true);
+  const handleOpen = () => setOpenDialog(true);
+  const handleClose = () => setOpenDialog(false);
+  const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTodo({ ...todo, title: e.target.value });
   };
-  const handleClose = () => {
-    setOpenDialog(false);
+  const handleChangeDetail = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setTodo({ ...todo, detail: e.target.value });
   };
-
+  const handleChangeDeadlineAt = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTodo({
+      ...todo,
+      deadlineAt: Timestamp.fromDate(new Date(e.target.value)),
+    });
+  };
   const handleTodoDelete = async () => {
     if (typeof id === "string") {
       const userDocumentRef = doc(db, "todos", id);
@@ -64,18 +56,18 @@ const TodoDetail = () => {
         });
     }
   };
-  const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTodo({ ...todo, title: e.target.value });
-  };
-  const handleChangeDetail = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setTodo({ ...todo, detail: e.target.value });
-  };
-  const handleChangeDeadlineAt = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTodo({
-      ...todo,
-      deadlineAt: Timestamp.fromDate(new Date(e.target.value)),
-    });
-  };
+
+  useEffect(() => {
+    if (typeof id === "string") {
+      const userDocumentRef = doc(db, "todos", id);
+      getDoc(userDocumentRef).then((documentSnapshot) => {
+        if (documentSnapshot.data()) {
+          const _todo = { ...documentSnapshot.data(), id };
+          setTodo(_todo);
+        }
+      });
+    }
+  }, [id]);
 
   return (
     <>

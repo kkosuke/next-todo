@@ -43,7 +43,7 @@ const TodoDetail = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <p>
-        <Link href="/todos">TODO一覧へ</Link>
+        <PrimaryLinkButton variant="outlined" href={`/todos/`} text="一覧へ" />
       </p>
       {todo ? (
         <>

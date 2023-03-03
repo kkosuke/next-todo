@@ -1,12 +1,24 @@
+import { useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useUser, login } from "@/context/auth";
-import { Alert, Button, InputLabel, Snackbar, TextField } from "@mui/material";
 import Link from "next/link";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { useState } from "react";
 import { css } from "@emotion/react";
 import { app } from "@/lib/firebase";
+import { useUser, login } from "@/context/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
+import {
+  Alert,
+  Box,
+  Button,
+  Checkbox,
+  Container,
+  FormControlLabel,
+  Grid,
+  Snackbar,
+  TextField,
+  Typography,
+} from "@mui/material";
 
 export default function SignIn() {
   const user = useUser();
@@ -64,98 +76,83 @@ export default function SignIn() {
           すでにログインしています（トップに移動します）
         </Alert>
       </Snackbar>
-      <main>
-        <p>
-          <Link href="/">トップへ</Link>
-        </p>
-        <h1>サインイン</h1>
-        <div
-          css={css`
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-flow: column;
-          `}
+      <Container component="main" maxWidth="xs">
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
         >
-          <form onSubmit={handleSubmit}>
-            <div
-              css={css`
-                display: flex;
-                justify-content: center;
-                align-items: center;
-              `}
-            >
-              <InputLabel>メールアドレス</InputLabel>
-              <TextField
-                name="email"
-                type="email"
-                size="small"
-                onChange={handleChangeEmail}
-                css={css`
-                  padding-left: 12px;
-                `}
-              />
-            </div>
-            <div
-              css={css`
-                display: flex;
-                justify-content: flex-end;
-                align-items: center;
-                margin-top: 16px;
-              `}
-            >
-              <InputLabel>パスワード</InputLabel>
-              <TextField
-                name="password"
-                type="password"
-                size="small"
-                onChange={handleChangePassword}
-                css={css`
-                  padding-left: 12px;
-                `}
-              />
-            </div>
-            <div
-              css={css`
-                display: flex;
-                justify-content: flex-end;
-                margin-top: 16px;
-              `}
-            >
-              <Button type="submit" variant="outlined">
-                サインイン
-              </Button>
-            </div>
+          <Typography component="h1" variant="h5">
+            サインイン
+          </Typography>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}
+          >
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="メールアドレス"
+              name="email"
+              type="email"
+              autoComplete="email"
+              onChange={handleChangeEmail}
+              autoFocus
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="パスワード"
+              type="password"
+              id="password"
+              onChange={handleChangePassword}
+              autoComplete="current-password"
+            />
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="[WIP]Remember me"
+            />
+            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3 }}>
+              サインイン
+            </Button>
             <div
               css={css`
                 text-align: center;
-                margin-top: 20px;
+                margin: 16px 0;
               `}
             >
               もしくは
             </div>
-            <div
+            <Button variant="contained" fullWidth onClick={handleGoogleLogin}>
+              google サインイン
+            </Button>
+            <Grid
+              container
               css={css`
-                text-align: center;
-                margin-top: 20px;
+                margin: 16px 0 0;
               `}
             >
-              <Button variant="contained" onClick={handleGoogleLogin}>
-                google サインイン
-              </Button>
-            </div>
-            <div
-              css={css`
-                display: flex;
-                justify-content: flex-end;
-                margin-top: 24px;
-              `}
-            >
-              サインアップは<Link href={"/signup"}>こちら</Link>から
-            </div>
-          </form>
-        </div>
-      </main>
+              <Grid item xs>
+                <Link href="#">[WIP]Forgot password?</Link>
+              </Grid>
+              <Grid item>
+                サインアップは
+                <Link href={"/signup"}>こちら</Link>
+                から
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
+      </Container>
     </>
   );
 }

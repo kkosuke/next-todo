@@ -27,9 +27,7 @@ const Todos = () => {
         <title>TODO一覧 | TODO</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <p>
-        <Link href="/">トップへ</Link>
-      </p>
+
       <h1>TODO一覧</h1>
       <main>
         <p>

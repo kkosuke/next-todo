@@ -5,6 +5,9 @@ import type { AppProps } from "next/app";
 import { RecoilRoot } from "recoil";
 import { useAuth } from "@/context/auth";
 import { AuthProvider } from "@/context/AuthContext";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+const theme = createTheme();
 
 type Props = {
   children: JSX.Element;
@@ -20,7 +23,10 @@ export default function App({ Component, pageProps }: AppProps) {
       <AuthProvider>
         <Auth>
           <DefaultLayout>
-            <Component {...pageProps} />
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              <Component {...pageProps} />
+            </ThemeProvider>
           </DefaultLayout>
         </Auth>
       </AuthProvider>

@@ -65,7 +65,7 @@ export const DefaultLayout: FC<Props> = ({ children }) => {
             <Typography variant="body1">
               My sticky footer can be found here.
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography color="text.secondary">
               {"Copyright © "}
               NEXT-TODO {new Date().getFullYear()}
               {"."}

@@ -136,9 +136,7 @@ export default function SignUp() {
               <Grid item xs></Grid>
               <Grid item>
                 サインインは
-                <Link href={"/signin"} variant="body2">
-                  こちら
-                </Link>
+                <Link href={"/signin"}>こちら</Link>
                 から
               </Grid>
             </Grid>

@@ -142,15 +142,11 @@ export default function SignIn() {
               `}
             >
               <Grid item xs>
-                <Link href="#" variant="body2">
-                  [WIP]Forgot password?
-                </Link>
+                <Link href="#">[WIP]Forgot password?</Link>
               </Grid>
               <Grid item>
                 サインアップは
-                <Link href={"/signup"} variant="body2">
-                  こちら
-                </Link>
+                <Link href={"/signup"}>こちら</Link>
                 から
               </Grid>
             </Grid>

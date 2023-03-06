@@ -1,3 +1,4 @@
+// つくったけど、firebaseでのType設定が全然できなかった。。
 export type TodoType = {
   id: string;
   detail:string;

@@ -4,9 +4,15 @@ import Link from "next/link";
 import { PrimaryLinkButton } from "@/components/atoms/button/PrimaryLinkButton";
 import { db } from "@/lib/firebase";
 import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
+import { Alert, Snackbar } from "@mui/material";
+import { useRouter } from "next/router";
 
 const Todos = () => {
+  const router = useRouter();
   const [todos, setTodos] = useState<any>([]);
+  const [isTodoCreateSuccess, setIsTodoCreateSuccess] = useState(
+    router.query.situation === "todo_creat_success"
+  );
   useEffect(() => {
     const postData = collection(db, "todos");
     const q = query(postData, orderBy("createdAt", "desc"));
@@ -27,6 +33,15 @@ const Todos = () => {
         <title>TODO一覧 | TODO</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
+      <Snackbar
+        open={isTodoCreateSuccess}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        autoHideDuration={3000}
+      >
+        <Alert onClose={() => setIsTodoCreateSuccess(false)} severity="success">
+          TODO作成に成功しました。
+        </Alert>
+      </Snackbar>
 
       <h1>TODO一覧</h1>
       <main>

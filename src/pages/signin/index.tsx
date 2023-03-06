@@ -39,7 +39,7 @@ export default function SignIn() {
         router.push(
           {
             pathname: "/",
-            query: { from: "signin_success" },
+            query: { situation: "signin_success" },
           },
           "/"
         );

@@ -8,10 +8,12 @@ import moment from "moment";
 import { PrimaryLinkButton } from "@/components/atoms/button/PrimaryLinkButton";
 import {
   Alert,
+  Box,
   Button,
   DialogActions,
   DialogTitle,
   Snackbar,
+  TextField,
 } from "@mui/material";
 import { SimpleDialog } from "@/components/molecules/dialog/SimpleDialog";
 
@@ -25,10 +27,15 @@ const TodoDetail = () => {
   const [openSnackbarError, setOpenSnackbarError] = useState(false);
   const handleOpen = () => setOpenDialog(true);
   const handleClose = () => setOpenDialog(false);
-  const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+  const handleChangeTitle = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setTodo({ ...todo, title: e.target.value });
   };
-  const handleChangeDetail = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleChangeDetail = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setTodo({ ...todo, detail: e.target.value });
   };
   const handleChangeDeadlineAt = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -85,6 +92,7 @@ const TodoDetail = () => {
       {todo ? (
         <>
           <Snackbar
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
             open={openSnackbarSuccess}
             autoHideDuration={1000}
             onClose={handleClose}
@@ -94,7 +102,6 @@ const TodoDetail = () => {
                 setOpenSnackbarSuccess(false);
               }}
               severity="success"
-              sx={{ width: "100%" }}
             >
               TODOを更新しました
             </Alert>
@@ -126,43 +133,50 @@ const TodoDetail = () => {
             </DialogActions>
           </SimpleDialog>
           <main>
-            <div>
-              <h1>
-                <input
-                  type="text"
-                  value={todo.title}
-                  onChange={handleChangeTitle}
-                />
-              </h1>
-              <div>
-                <p>
-                  <textarea
-                    value={todo.detail}
-                    onChange={handleChangeDetail}
-                  ></textarea>
-                </p>
-              </div>
-            </div>
-            <div>
-              <p>
-                期限：
-                <input
-                  type="datetime-local"
-                  value={moment(todo.deadlineAt.toDate()).format(
-                    "YYYY-MM-DDTHH:mm"
-                  )}
-                  onChange={handleChangeDeadlineAt}
-                />
-              </p>
-              <div>
-                作成：
-                {moment(todo.createdAt.toDate()).format("YYYY/MM/DD HH:mm")}
-              </div>
-              <div>
-                編集：
-                {moment(todo.editedAt.toDate()).format("YYYY/MM/DD HH:mm")}
-              </div>
-            </div>
+            <h1>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="TODOのタイトル"
+                placeholder="例）今日のご飯"
+                type="text"
+                value={todo.title}
+                onChange={(e) => handleChangeTitle(e)}
+              />
+            </h1>
+            <Box mt={2}>
+              <TextField
+                multiline
+                fullWidth
+                value={todo.detail}
+                InputProps={{
+                  rows: 3,
+                }}
+                label="TODOの詳細"
+                placeholder="例）生姜焼き、味噌汁、ごはん"
+                onChange={(e) => handleChangeDetail(e)}
+              />
+            </Box>
+            <Box mt={2}>
+              <TextField
+                label="TODOの期限"
+                type="datetime-local"
+                value={moment(todo.deadlineAt.toDate()).format(
+                  "YYYY-MM-DDTHH:mm"
+                )}
+                onChange={handleChangeDeadlineAt}
+              />
+            </Box>
+            <Box mt={2}>
+              作成：
+              {moment(todo.createdAt.toDate()).format("YYYY/MM/DD HH:mm")}
+            </Box>
+            <Box mt={2} mb={2}>
+              編集：
+              {moment(todo.editedAt.toDate()).format("YYYY/MM/DD HH:mm")}
+            </Box>
             <Button variant="contained" onClick={handleOpen}>
               更新する
             </Button>

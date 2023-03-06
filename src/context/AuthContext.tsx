@@ -40,7 +40,15 @@ export const AuthProvider = ({ children }: AuthProps) => {
   useEffect(() => {
     const authStateChanged = onAuthStateChanged(auth, async (user) => {
       setUser(user);
-      !user && !isAvailableForViewing && (await router.push("/signin"));
+      !user &&
+        !isAvailableForViewing &&
+        (await router.push(
+          {
+            pathname: "/signin",
+            query: { situation: "need_to_signin" },
+          },
+          "/signin"
+        ));
     });
     return () => {
       authStateChanged();

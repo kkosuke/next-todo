@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -25,13 +25,15 @@ export default function SignIn() {
   const router = useRouter();
   const isLoggedIn = !!user;
   const auth = getAuth(app);
-  const [isSignInning, setIsSignInning] = useState(false);
+
+  const [isNeedToSignin, setIsNeedToSignin] = useState(
+    router.query.situation === "need_to_signin"
+  );
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      setIsSignInning(true);
       if (password.length > 5) {
         await signInWithEmailAndPassword(auth, email, password);
         router.push(
@@ -42,8 +44,8 @@ export default function SignIn() {
           "/"
         );
       }
-    } finally {
-      setIsSignInning(false);
+    } catch (error) {
+      console.log(error);
     }
   };
   const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,13 +54,15 @@ export default function SignIn() {
   const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.currentTarget.value);
   };
-
   const handleGoogleLogin = (): void => {
     login().catch((error) => console.error(error));
   };
-  const handleClose = async () => {
-    await router.push("/");
-  };
+  useEffect(() => {
+    if (isLoggedIn) {
+      router.push("/");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <>
       <Head>
@@ -66,14 +70,12 @@ export default function SignIn() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Snackbar
-        open={isLoggedIn && !isSignInning}
+        open={isNeedToSignin}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         autoHideDuration={3000}
-        key={"top" + "center"}
-        onClose={handleClose}
       >
-        <Alert onClose={handleClose} severity="warning">
-          すでにログインしています（トップに移動します）
+        <Alert onClose={() => setIsNeedToSignin(false)} severity="info">
+          利用するにはログインをしてください。
         </Alert>
       </Snackbar>
       <Container component="main" maxWidth="xs">
@@ -104,7 +106,7 @@ export default function SignIn() {
               type="email"
               autoComplete="email"
               onChange={handleChangeEmail}
-              autoFocus
+              autoFocus={!isNeedToSignin}
             />
             <TextField
               margin="normal"

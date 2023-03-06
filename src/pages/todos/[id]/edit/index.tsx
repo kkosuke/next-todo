@@ -114,14 +114,14 @@ const TodoDetail = () => {
               TODO更新が失敗しました
             </Alert>
           </Snackbar>
-          <SimpleDialog open={openDialog} onClose={handleClose}>
+          <SimpleDialog open={openDialog}>
             <DialogTitle>このTODOを更新します？</DialogTitle>
             <DialogActions>
               <Button autoFocus onClick={handleClose}>
-                閉じる
+                キャンセル
               </Button>
               <Button onClick={handleTodoDelete} autoFocus>
-                更新する
+                TODOを更新する
               </Button>
             </DialogActions>
           </SimpleDialog>

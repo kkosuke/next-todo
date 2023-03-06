@@ -15,22 +15,18 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 import { css } from "@emotion/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function SignUp() {
   const router = useRouter();
   const user = useUser();
   const auth = getAuth(app);
   const isLoggedIn = !!user;
-  const [isSignUpping, setIsSignUpping] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const handleClose = async () => {
-    await router.push("/");
-  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsSignUpping(true);
     try {
       if (password.length > 5) {
         await createUserWithEmailAndPassword(auth, email, password);
@@ -42,8 +38,8 @@ export default function SignUp() {
           "/"
         );
       }
-    } finally {
-      setIsSignUpping(false);
+    } catch (error) {
+      console.log(error);
     }
   };
   const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,23 +51,18 @@ export default function SignUp() {
   const handleGoogleLogin = (): void => {
     login().catch((error) => console.error(error));
   };
+  useEffect(() => {
+    if (isLoggedIn) {
+      router.push("/");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <>
       <Head>
         <title>サインアップ（新規会員登録）</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <Snackbar
-        open={isLoggedIn && !isSignUpping}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        autoHideDuration={3000}
-        key={"top" + "center"}
-        onClose={handleClose}
-      >
-        <Alert onClose={handleClose} severity="warning">
-          すでにログインしています（トップに移動します）
-        </Alert>
-      </Snackbar>
       <Container component="main" maxWidth="xs">
         <Box
           sx={{

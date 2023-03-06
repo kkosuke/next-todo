@@ -47,14 +47,14 @@ const TodoDetail = () => {
       </p>
       {todo ? (
         <>
-          <SimpleDialog open={openDialog} onClose={handleClose}>
+          <SimpleDialog open={openDialog}>
             <DialogTitle>本当にTODOを削除しますか？</DialogTitle>
             <DialogActions>
               <Button autoFocus onClick={handleClose}>
-                閉じる
+                キャンセル
               </Button>
               <Button onClick={handleTodoDelete} autoFocus>
-                削除する
+                TODOを削除する
               </Button>
             </DialogActions>
           </SimpleDialog>

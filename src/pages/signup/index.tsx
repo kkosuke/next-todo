@@ -33,7 +33,7 @@ export default function SignUp() {
         router.push(
           {
             pathname: "/",
-            query: { from: "signup_success" },
+            query: { situation: "signup_success" },
           },
           "/"
         );

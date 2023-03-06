@@ -22,8 +22,8 @@ export default function Home() {
   const router = useRouter();
   const [openDialog, setOpenDialog] = useState(false);
   const [isLoginSuccess, setIsLoginSuccess] = useState(
-    router.query.from === "signup_success" ||
-      router.query.from === "signin_success"
+    router.query.situation === "signup_success" ||
+      router.query.situation === "signin_success"
   );
   const handleLogout = (): void => {
     logout().catch((error) => console.error(error));

@@ -30,7 +30,6 @@ export const AuthProvider = ({ children }: AuthProps) => {
   const [user, setUser] = useState<UserType>(null);
   const isAvailableForViewing =
     router.pathname === "/" ||
-    router.pathname === "/about" ||
     router.pathname === "/signin" ||
     router.pathname === "/signup";
   const value = {

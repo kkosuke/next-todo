@@ -53,79 +53,69 @@ export default function Home() {
         key={"top" + "center"}
       >
         <Alert onClose={() => setIsLoginSuccess(false)} severity="success">
-          {router.query.from === "signup_success" ? (
-            <>サインアップありがとうございます！</>
-          ) : (
-            <>サインインしました</>
-          )}
+          {router.query.from === "signup_success"
+            ? "サインアップ"
+            : "サインイン"}
+          に成功しました
         </Alert>
       </Snackbar>
-      <SimpleDialog open={openDialog} onClose={handleClose}>
+      <SimpleDialog open={openDialog}>
         <DialogTitle>本当にユーザー情報を削除しますか？</DialogTitle>
         <DialogActions>
           <Button autoFocus onClick={handleClose}>
             キャンセル
           </Button>
           <Button onClick={handleDelete} autoFocus>
-            削除する
+            ユーザー情報を削除する
           </Button>
         </DialogActions>
       </SimpleDialog>
-      <main>
-        {/* Hero unit */}
-        <Box
-          sx={{
-            bgcolor: "background.paper",
-            pt: 8,
-            pb: 6,
-          }}
-        >
-          <Container maxWidth="sm">
-            <Typography
-              component="h1"
-              variant="h2"
-              align="center"
-              color="text.primary"
-              gutterBottom
-            >
-              NEXT-TODO
-            </Typography>
-            <Typography
-              variant="h5"
-              align="center"
-              color="text.secondary"
-              paragraph
-            >
-              「<Link href="/todos">TODOs</Link>
-              」いい感じの文章が入ります。いい感じの文章が入ります。いい感じの文章が入ります。
-            </Typography>
-            <Stack
-              sx={{ pt: 4 }}
-              direction="row"
-              spacing={2}
-              justifyContent="center"
-            >
-              {user !== null ? (
-                <>
-                  <PrimaryLinkButton href="/mypage" text="[WIP]マイページ" />
-                  <button type="button" onClick={handleLogout}>
-                    サインアウト
-                  </button>
-                  <button type="button" onClick={handleOpen}>
-                    ユーザー情報削除
-                  </button>
-                </>
-              ) : (
-                <>
-                  <PrimaryLinkButton href="/signup" text="サインアップ" />
+      <Box pt={8} pb={6}>
+        <Container maxWidth="sm">
+          <Typography
+            component="h1"
+            variant="h2"
+            align="center"
+            color="text.primary"
+            gutterBottom
+          >
+            NEXT-TODO
+          </Typography>
+          <Typography
+            variant="h5"
+            align="center"
+            color="text.secondary"
+            paragraph
+          >
+            「<Link href="/todos">TODOs</Link>
+            」いい感じの文章が入ります。いい感じの文章が入ります。いい感じの文章が入ります。
+          </Typography>
+          <Stack
+            sx={{ pt: 4 }}
+            direction="row"
+            spacing={2}
+            justifyContent="center"
+          >
+            {user !== null ? (
+              <>
+                <PrimaryLinkButton href="/mypage" text="[WIP]マイページ" />
+                <button type="button" onClick={handleLogout}>
+                  サインアウト
+                </button>
+                <button type="button" onClick={handleOpen}>
+                  ユーザー情報削除
+                </button>
+              </>
+            ) : (
+              <>
+                <PrimaryLinkButton href="/signup" text="サインアップ" />
 
-                  <PrimaryLinkButton href="/signin" text="サインイン" />
-                </>
-              )}
-            </Stack>
-          </Container>
-        </Box>
-      </main>
+                <PrimaryLinkButton href="/signin" text="サインイン" />
+              </>
+            )}
+          </Stack>
+        </Container>
+      </Box>
     </>
   );
 }

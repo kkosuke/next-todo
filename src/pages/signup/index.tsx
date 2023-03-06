@@ -1,21 +1,20 @@
+import { useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { app } from "@/lib/firebase";
 import { useUser, login } from "@/context/auth";
 import {
-  Alert,
   Box,
   Button,
   Container,
   Grid,
-  Snackbar,
   TextField,
   Typography,
 } from "@mui/material";
-import Link from "next/link";
+
 import { css } from "@emotion/react";
-import { useEffect, useState } from "react";
 
 export default function SignUp() {
   const router = useRouter();
@@ -42,12 +41,10 @@ export default function SignUp() {
       console.log(error);
     }
   };
-  const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) =>
     setEmail(e.currentTarget.value);
-  };
-  const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) =>
     setPassword(e.currentTarget.value);
-  };
   const handleGoogleLogin = (): void => {
     login().catch((error) => console.error(error));
   };

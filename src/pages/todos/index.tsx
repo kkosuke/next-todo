@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { PrimaryLinkButton } from "@/components/atoms/button/PrimaryLinkButton";
 import { db } from "@/lib/firebase";
 import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
 import { Alert, Snackbar } from "@mui/material";
-import { useRouter } from "next/router";
 
 const Todos = () => {
   const router = useRouter();
@@ -16,15 +16,8 @@ const Todos = () => {
   useEffect(() => {
     const postData = collection(db, "todos");
     const q = query(postData, orderBy("createdAt", "desc"));
-    // getDocs(q).then((snapshot)=>{
-    //   setPosts(snapshot.docs.map((doc)=>(doc.data())));
-    // });
     onSnapshot(q, (snapshot) => {
-      setTodos(
-        snapshot.docs.map((doc) => {
-          return { ...doc.data(), id: doc.id };
-        })
-      );
+      setTodos(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     });
   }, []);
   return (

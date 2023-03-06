@@ -48,12 +48,10 @@ export default function SignIn() {
       console.log(error);
     }
   };
-  const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) =>
     setEmail(e.currentTarget.value);
-  };
-  const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) =>
     setPassword(e.currentTarget.value);
-  };
   const handleGoogleLogin = (): void => {
     login().catch((error) => console.error(error));
   };

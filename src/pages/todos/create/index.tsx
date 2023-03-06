@@ -1,14 +1,7 @@
 import React, { useState } from "react";
 import Head from "next/head";
-import Link from "next/link";
-import {
-  Alert,
-  Box,
-  Button,
-  Snackbar,
-  TextareaAutosize,
-  TextField,
-} from "@mui/material";
+import { useRouter } from "next/router";
+import { Box, Button, TextField } from "@mui/material";
 import {
   collection,
   addDoc,
@@ -17,16 +10,13 @@ import {
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { PrimaryLinkButton } from "@/components/atoms/button/PrimaryLinkButton";
-import { useRouter } from "next/router";
 
 const Create = () => {
   const router = useRouter();
   const [todoTitle, setTodoTitle] = useState("");
   const [todoDetail, setTodoDetail] = useState("");
-
   const [todoDeadlineAt, setTodoDeadlineAt] = useState("2023-03-01T00:00"); // 暫定的に設定（設定 or 未設定ができれば良いが…）
 
-  // 型の参考：https://qiita.com/Takepepe/items/f1ba99a7ca7e66290f24
   const handelFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (todoTitle) {

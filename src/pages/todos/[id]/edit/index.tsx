@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { doc, getDoc, updateDoc, Timestamp } from "firebase/firestore";
 import { db } from "@/lib/firebase";
@@ -30,20 +29,15 @@ const TodoDetail = () => {
 
   const handleChangeTitle = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setTodo({ ...todo, title: e.target.value });
-  };
+  ) => setTodo({ ...todo, title: e.target.value });
   const handleChangeDetail = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setTodo({ ...todo, detail: e.target.value });
-  };
-  const handleChangeDeadlineAt = (e: React.ChangeEvent<HTMLInputElement>) => {
+  ) => setTodo({ ...todo, detail: e.target.value });
+  const handleChangeDeadlineAt = (e: React.ChangeEvent<HTMLInputElement>) =>
     setTodo({
       ...todo,
       deadlineAt: Timestamp.fromDate(new Date(e.target.value)),
     });
-  };
   const handleTodoDelete = async () => {
     if (typeof id === "string") {
       const userDocumentRef = doc(db, "todos", id);

@@ -1,7 +1,7 @@
+import { useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import styles from "@/styles/Home.module.css";
 import { useUser, logout } from "@/context/auth";
 import { PrimaryLinkButton } from "@/components/atoms/button/PrimaryLinkButton";
 import {
@@ -12,7 +12,6 @@ import {
   Snackbar,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
 import { SimpleDialog } from "@/components/molecules/dialog/SimpleDialog";
 import { Box, Container } from "@mui/system";
 import Stack from "@mui/material/Stack";
@@ -28,12 +27,8 @@ export default function Home() {
   const handleLogout = (): void => {
     logout().catch((error) => console.error(error));
   };
-  const handleOpen = () => {
-    setOpenDialog(true);
-  };
-  const handleClose = () => {
-    setOpenDialog(false);
-  };
+  const handleOpen = () => setOpenDialog(true);
+  const handleClose = () => setOpenDialog(false);
   const handleDelete = () => {
     if (user) {
       user.delete();

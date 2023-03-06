@@ -60,3 +60,4 @@ Next.jsで「TODOリスト」を作成してください。
 - https://mui.com/material-ui/react-dialog/
 - https://cloud.google.com/firestore/docs/manage-data/add-data?hl=ja#server_timestamp
 - https://qiita.com/cieloazul310/items/d630da98439c89d773ba
+- MUI textare https://codesandbox.io/s/material-ui-textareaautosize-l2l2v?from-embed=&file=/src/index.tsx:1629-1705

@@ -138,7 +138,7 @@ const TodoEdit = () => {
                 placeholder="例）今日のご飯"
                 type="text"
                 value={todo.title}
-                onChange={(e) => handleChangeTitle(e)}
+                onChange={handleChangeTitle}
               />
             </h1>
             <Box mt={2}>
@@ -151,7 +151,7 @@ const TodoEdit = () => {
                 }}
                 label="TODOの詳細"
                 placeholder="例）生姜焼き、味噌汁、ごはん"
-                onChange={(e) => handleChangeDetail(e)}
+                onChange={handleChangeDetail}
               />
             </Box>
             <Box mt={2}>

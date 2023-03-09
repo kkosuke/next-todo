@@ -11,14 +11,21 @@ const Todos = () => {
   const router = useRouter();
   const [todos, setTodos] = useState<any>([]);
   const [isTodoCreateSuccess, setIsTodoCreateSuccess] = useState(
-    router.query.situation === "todo_creat_success"
+    router.query.situation === "todo_create_success"
   );
+
   useEffect(() => {
+    let cleanup = false;
     const postData = collection(db, "todos");
     const q = query(postData, orderBy("createdAt", "desc"));
     onSnapshot(q, (snapshot) => {
-      setTodos(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      if (!cleanup) {
+        setTodos(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      }
     });
+    return () => {
+      cleanup = true;
+    };
   }, []);
   return (
     <>

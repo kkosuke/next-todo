@@ -33,7 +33,7 @@ const Create = () => {
       router.push(
         {
           pathname: "/todos",
-          query: { situation: "todo_creat_success" },
+          query: { situation: "todo_create_success" },
         },
         "/"
       );

@@ -3,7 +3,6 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { doc, getDoc, updateDoc, Timestamp } from "firebase/firestore";
 import { db } from "@/lib/firebase";
-import moment from "moment";
 import { PrimaryLinkButton } from "@/components/atoms/button/PrimaryLinkButton";
 import {
   Alert,
@@ -15,8 +14,10 @@ import {
   TextField,
 } from "@mui/material";
 import { SimpleDialog } from "@/components/molecules/dialog/SimpleDialog";
+import { DateFnsTimestamp } from "@/components/atoms/date/DateFnsTimestamp";
+import { format } from "date-fns";
 
-const TodoDetail = () => {
+const TodoEdit = () => {
   const router = useRouter();
   const id = router.query.id;
 
@@ -27,34 +28,34 @@ const TodoDetail = () => {
   const handleOpen = () => setOpenDialog(true);
   const handleClose = () => setOpenDialog(false);
 
-  const handleChangeTitle = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => setTodo({ ...todo, title: e.target.value });
-  const handleChangeDetail = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => setTodo({ ...todo, detail: e.target.value });
+  const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setTodo({ ...todo, title: e.target.value });
+
+  const handleChangeDetail = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
+    setTodo({ ...todo, detail: e.target.value });
+
   const handleChangeDeadlineAt = (e: React.ChangeEvent<HTMLInputElement>) =>
     setTodo({
       ...todo,
       deadlineAt: Timestamp.fromDate(new Date(e.target.value)),
     });
+
   const handleTodoDelete = async () => {
     if (typeof id === "string") {
       const userDocumentRef = doc(db, "todos", id);
-      await updateDoc(userDocumentRef, {
-        title: todo.title,
-        detail: todo.detail,
-        deadlineAt: todo.deadlineAt,
-      })
-        .then(() => {
+      try {
+        await updateDoc(userDocumentRef, {
+          title: todo.title,
+          detail: todo.detail,
+          deadlineAt: todo.deadlineAt,
+        }).then(() => {
           setOpenSnackbarSuccess(true);
-        })
-        .catch(() => {
-          setOpenSnackbarError(true);
-        })
-        .finally(() => {
-          setOpenDialog(false);
         });
+      } catch {
+        setOpenSnackbarError(true);
+      } finally {
+        setOpenDialog(false);
+      }
     }
   };
 
@@ -137,7 +138,7 @@ const TodoDetail = () => {
                 placeholder="例）今日のご飯"
                 type="text"
                 value={todo.title}
-                onChange={(e) => handleChangeTitle(e)}
+                onChange={handleChangeTitle}
               />
             </h1>
             <Box mt={2}>
@@ -150,26 +151,24 @@ const TodoDetail = () => {
                 }}
                 label="TODOの詳細"
                 placeholder="例）生姜焼き、味噌汁、ごはん"
-                onChange={(e) => handleChangeDetail(e)}
+                onChange={handleChangeDetail}
               />
             </Box>
             <Box mt={2}>
               <TextField
                 label="TODOの期限"
                 type="datetime-local"
-                value={moment(todo.deadlineAt.toDate()).format(
-                  "YYYY-MM-DDTHH:mm"
-                )}
+                value={format(todo.deadlineAt.toDate(), "yyyy-MM-dd'T'HH:mm")}
                 onChange={handleChangeDeadlineAt}
               />
             </Box>
             <Box mt={2}>
               作成：
-              {moment(todo.createdAt.toDate()).format("YYYY/MM/DD HH:mm")}
+              <DateFnsTimestamp dateObject={todo.createdAt.toDate()} />
             </Box>
             <Box mt={2} mb={2}>
               編集：
-              {moment(todo.editedAt.toDate()).format("YYYY/MM/DD HH:mm")}
+              <DateFnsTimestamp dateObject={todo.editedAt.toDate()} />
             </Box>
             <Button variant="contained" onClick={handleOpen}>
               更新する
@@ -183,4 +182,4 @@ const TodoDetail = () => {
   );
 };
 
-export default TodoDetail;
+export default TodoEdit;

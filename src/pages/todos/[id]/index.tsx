@@ -3,10 +3,10 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { doc, getDoc, deleteDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
-import moment from "moment";
 import { PrimaryLinkButton } from "@/components/atoms/button/PrimaryLinkButton";
 import { Button, DialogActions, DialogTitle } from "@mui/material";
 import { SimpleDialog } from "@/components/molecules/dialog/SimpleDialog";
+import { DateFnsTimestamp } from "@/components/atoms/date/DateFnsTimestamp";
 
 const TodoDetail = () => {
   const [todo, setTodo] = useState<any>(null);
@@ -18,7 +18,7 @@ const TodoDetail = () => {
       const userDocumentRef = doc(db, "todos", id);
       getDoc(userDocumentRef).then((documentSnapshot) => {
         if (documentSnapshot.data()) {
-          console.log({ ...documentSnapshot.data(), id });
+          // console.log({ ...documentSnapshot.data(), id });
           setTodo({ ...documentSnapshot.data(), id });
         }
       });
@@ -73,15 +73,15 @@ const TodoDetail = () => {
             <div>
               <div>
                 期限：
-                {moment(todo.deadlineAt.toDate()).format("YYYY/MM/DD HH:mm")}
+                <DateFnsTimestamp dateObject={todo.deadlineAt.toDate()} />
               </div>
               <div>
                 作成：
-                {moment(todo.createdAt.toDate()).format("YYYY/MM/DD HH:mm")}
+                <DateFnsTimestamp dateObject={todo.createdAt.toDate()} />
               </div>
               <div>
                 編集：
-                {moment(todo.editedAt.toDate()).format("YYYY/MM/DD HH:mm")}
+                <DateFnsTimestamp dateObject={todo.editedAt.toDate()} />
               </div>
             </div>
           </main>

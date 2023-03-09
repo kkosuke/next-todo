@@ -65,3 +65,5 @@ Next.jsで「TODOリスト」を作成してください。
 - date-fns
   - https://github.com/date-fns/date-fns/issues/1143
   - https://www.azukipan.com/posts/react-date-fns/
+- cleanup
+  - https://zenn.dev/takuyakikuchi/articles/a96b8d97a0450c

@@ -15,12 +15,17 @@ const Todos = () => {
   );
 
   useEffect(() => {
+    let cleanup = false;
     const postData = collection(db, "todos");
     const q = query(postData, orderBy("createdAt", "desc"));
-    const unSubscribe = onSnapshot(q, (snapshot) => {
-      setTodos(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    onSnapshot(q, (snapshot) => {
+      if (!cleanup) {
+        setTodos(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      }
     });
-    return unSubscribe;
+    return () => {
+      cleanup = true;
+    };
   }, []);
   return (
     <>

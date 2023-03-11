@@ -18,13 +18,13 @@ const Todos = () => {
     let cleanup = false;
     const postData = collection(db, "todos");
     const q = query(postData, orderBy("createdAt", "desc"));
-    onSnapshot(q, (snapshot) => {
+    const unsubscribe = onSnapshot(q, (snapshot) => {
       if (!cleanup) {
         setTodos(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       }
     });
     return () => {
-      cleanup = true;
+      unsubscribe();
     };
   }, []);
   return (

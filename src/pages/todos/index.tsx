@@ -15,13 +15,10 @@ const Todos = () => {
   );
 
   useEffect(() => {
-    let cleanup = false;
     const postData = collection(db, "todos");
     const q = query(postData, orderBy("createdAt", "desc"));
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      if (!cleanup) {
-        setTodos(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-      }
+      setTodos(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     });
     return () => {
       unsubscribe();

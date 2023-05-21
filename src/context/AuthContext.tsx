@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }: AuthProps) => {
       setUser(user);
       !user &&
         !isAvailableForViewing &&
-        (await router.push(
+        (await router.replace(
           {
             pathname: "/signin",
             query: { situation: "need_to_signin" },
